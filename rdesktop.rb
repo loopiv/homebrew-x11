@@ -1,14 +1,7 @@
 class Rdesktop < Formula
   homepage "http://www.rdesktop.org/"
-  url "https://downloads.sourceforge.net/project/rdesktop/rdesktop/1.8.3/rdesktop-1.8.3.tar.gz"
-  mirror "https://mirrors.kernel.org/debian/pool/main/r/rdesktop/rdesktop_1.8.3.orig.tar.gz"
-  sha256 "88b20156b34eff5f1b453f7c724e0a3ff9370a599e69c01dc2bf0b5e650eece4"
-
-  bottle do
-    sha256 "a6fe9d0323bbdc6db424f056b1cf20df23c35a1d4f15ab52c1b0eb30e19287e7" => :yosemite
-    sha256 "fdfac37d70b9e750de33be617345d0d7226bcc764e8a3fbd16cc2ef8e0fc8731" => :mavericks
-    sha256 "162ad10246d51275699969b449aa09e30aaa852c7892331970bccc587f5a2163" => :mountain_lion
-  end
+  url "https://github.com/rdesktop/rdesktop/releases/download/v1.8.3/rdesktop-1.8.3.tar.gz"
+  sha256 "43896afa6cde099fc1c2609eae1b0fa0997897888daed16e5b992c8878dd3b4f"
 
   depends_on "openssl"
   depends_on :x11
@@ -23,7 +16,6 @@ class Rdesktop < Formula
   def install
     args = ["--prefix=#{prefix}",
             "--disable-credssp",
-            "--disable-smartcard", # disable temporally before upstream fix
             "--with-openssl=#{Formula["openssl"].opt_prefix}",
             "--x-includes=#{MacOS::X11.include}",
             "--x-libraries=#{MacOS::X11.lib}"]
