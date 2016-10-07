@@ -3,6 +3,13 @@ class Freeglut < Formula
   url "https://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz"
   sha256 "2a43be8515b01ea82bcfa17d29ae0d40bd128342f0930cd1f375f1ff999f76a2"
 
+  bottle do
+    cellar :any
+    sha256 "f974f6a640c0bbe0022b2658645377bbd82e0a1c5c7c6cfc5734defd0df16d39" => :sierra
+    sha256 "1ac12fa3ec33908392230016b32e9741a584d81cbaf191cfe41cc9979177cd9b" => :el_capitan
+    sha256 "1f656946c3b2cc6d1748c32895c1259fbf0659959c9c9ebbdc37bc67edbf42e6" => :yosemite
+  end
+
   depends_on :x11
   depends_on "cmake"
 
