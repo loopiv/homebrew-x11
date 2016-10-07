@@ -1,29 +1,16 @@
 class Freeglut < Formula
   homepage "http://freeglut.sourceforge.net/"
-  url "https://downloads.sourceforge.net/project/freeglut/freeglut/2.8.1/freeglut-2.8.1.tar.gz"
-  sha256 "dde46626a62a1cd9cf48a11951cdd592e7067c345cffe193a149dfd47aef999a"
-
-  # Examples won't build on Snow Leopard as one of them requires
-  # a header the system provided X11 doesn't have.
-  option "with-examples", "Build the examples."
-  option :universal
+  url "https://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz"
+  sha256 "2a43be8515b01ea82bcfa17d29ae0d40bd128342f0930cd1f375f1ff999f76a2"
 
   depends_on :x11
+  depends_on "cmake"
 
-  patch :DATA if MacOS.version >= :lion
+  patch :DATA
 
   def install
-    ENV.universal_binary if build.universal?
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
 
-    if build.without?("examples") || MacOS.version < :lion
-      inreplace "Makefile" do |s|
-        s.change_make_var! "SUBDIRS", "src include doc"
-      end
-    end
-
+    system "cmake", "-D", "FREEGLUT_BUILD_DEMOS:BOOL=OFF", "-D", "CMAKE_INSTALL_PREFIX:PATH=#{prefix}", "."
     system "make", "all"
     system "make", "install"
   end
@@ -31,15 +18,24 @@ end
 
 __END__
 
-diff -ur org/freeglut-2.8.1/include/GL/freeglut_std.h freeglut-2.8.1/include/GL/freeglut_std.h
---- org/freeglut-2.8.1/include/GL/freeglut_std.h
-+++ freeglut-2.8.1/include/GL/freeglut_std.h
-@@ -122,7 +122,7 @@
-  * Always include OpenGL and GLU headers
-  */
- #if __APPLE__
--#   include <OpenGL/gl.h>
-+#   include <OpenGL/gl3.h>
- #   include <OpenGL/glu.h>
- #else
- #   include <GL/gl.h>
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 28f8651..d1f6a86 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -220,6 +220,16 @@
+ IF(FREEGLUT_GLES)
+   ADD_DEFINITIONS(-DFREEGLUT_GLES)
+   LIST(APPEND LIBS GLESv2 GLESv1_CM EGL)
++ELSEIF(APPLE)
++  # on OSX FindOpenGL uses framework version of OpenGL, but we need X11 version
++  FIND_PATH(GLX_INCLUDE_DIR GL/glx.h
++            PATHS /opt/X11/include /usr/X11/include /usr/X11R6/include)
++  FIND_LIBRARY(OPENGL_gl_LIBRARY GL
++               PATHS /opt/X11/lib /usr/X11/lib /usr/X11R6/lib)
++  FIND_LIBRARY(OPENGL_glu_LIBRARY GLU
++               PATHS /opt/X11/lib /usr/X11/lib /usr/X11R6/lib)
++  LIST(APPEND LIBS ${OPENGL_gl_LIBRARY})
++  INCLUDE_DIRECTORIES(${GLX_INCLUDE_DIR})
+ ELSE()
+   FIND_PACKAGE(OpenGL REQUIRED)
+   LIST(APPEND LIBS ${OPENGL_gl_LIBRARY})
