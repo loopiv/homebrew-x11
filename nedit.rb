@@ -15,7 +15,7 @@ class Nedit < Formula
   depends_on :x11
 
   # Nedit specifically checks the version of openmotif that is running against.
-  # Unfortunately this check leaves out the latest version of openmotif 2.3.4 (
+  # Unfortunately this check leaves out the latest versions of openmotif 2.3.4+ (
   # which is what homebrew currently has)
   # see https://sourceforge.net/p/nedit/patches/177/ for the upstream bug report,
   # and patch.
@@ -49,7 +49,7 @@ index 1ab3ef8..8d11abc 100644
          result = MotifKnownBad;
      }
 -    else if (XmFullVersion >= 200203 && XmFullVersion <= 200303) /* 2.2.3 - 2.3 is good */
-+    else if (XmFullVersion >= 200203 && XmFullVersion <= 200304) /* 2.2.3 - 2.3.4 is good */
++    else if (XmFullVersion >= 200203 && XmFullVersion <= 200306) /* 2.2.3 - 2.3.6 is good */
      {
          result = MotifKnownGood;
      }
