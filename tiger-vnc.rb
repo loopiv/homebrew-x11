@@ -3,6 +3,7 @@ class TigerVnc < Formula
   homepage "http://tigervnc.org/"
   url "https://github.com/TigerVNC/tigervnc/archive/v1.7.0.tar.gz"
   sha256 "4aa704747b4f8f1d59768b663c488fa937e6783db2a46ae407cd2a599cfbf8b1"
+  revision 1
 
   bottle do
     sha256 "6198b9741a6c14df3e0fc0229bd1c7bc285a978bbfed1cec41905515328c3df8" => :el_capitan
@@ -16,6 +17,12 @@ class TigerVnc < Formula
   depends_on "gettext"
   depends_on "fltk"
   depends_on :x11
+
+  # reduce thread stack size to avoid crash
+  patch do
+    url "https://github.com/TigerVNC/tigervnc/commit/1349e42e395a0a88b67447580d526daf31dba591.diff"
+    sha256 "e7321146c7ab752279423c9fc0ee1414eed8f1dc81afd2ea963a7f2d115a7a79"
+  end
 
   def install
     turbo = Formula["jpeg-turbo"]
