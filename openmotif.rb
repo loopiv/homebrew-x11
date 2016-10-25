@@ -3,6 +3,7 @@ class Openmotif < Formula
   homepage "https://motif.ics.com/motif"
   url "https://downloads.sourceforge.net/project/motif/Motif%202.3.6%20Source%20Code/motif-2.3.6.tar.gz"
   sha256 "fa810e6bedeca0f5a2eb8216f42129bcf6bd23919068d433e386b7bfc05d58cf"
+  revision 1
 
   bottle do
     sha256 "9c90a53591bfe54c2c336c08795aeeb6182b804cbb5db293e8a6268c1d321535" => :sierra
@@ -121,3 +122,43 @@ index e3f56bd..d056e03 100644
  #include <Xm/Xm.h>
  #include "wsm.h"
  #include "wsmDebug.h"
+
+
+diff --git a/lib/Xm/VendorS.c b/lib/Xm/VendorS.c
+index b5b5a24..cbd0967 100644
+--- a/lib/Xm/VendorS.c
++++ b/lib/Xm/VendorS.c
+@@ -292,6 +292,25 @@ static unsigned short destroy_list_cnt ;
+ static Display * _XmDisplayHandle = NULL ;
+ static XtErrorMsgHandler previousWarningHandler = NULL;
+
++
++
++#if defined(__APPLE__)
++/* Hack necessary to handle Apple two-level namespaces */
++extern WidgetClass vendorShellWidgetClass; /* from Xt/Vendor.c */
++extern VendorShellClassRec _XmVendorShellClassRec;
++#define vendorShellClassRec _XmVendorShellClassRec
++
++__attribute__((constructor))
++static void __VendorShellHack(void)
++{
++    vendorShellWidgetClass = (WidgetClass)(&_XmVendorShellClassRec);
++    transientShellWidgetClass->core_class.superclass = vendorShellWidgetClass;
++    topLevelShellWidgetClass->core_class.superclass = vendorShellWidgetClass;
++}
++#endif
++
++
++
+ /***************************************************************************
+  *
+  * Vendor shell class record
+@@ -506,6 +525,8 @@ VendorShellClassRec vendorShellClassRec = {
+     }
+ };
+
++#undef vendorShellClassRec
++
+ externaldef(vendorshellwidgetclass) WidgetClass
+   vendorShellWidgetClass = (WidgetClass) (&vendorShellClassRec);
