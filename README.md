@@ -15,4 +15,4 @@ brew install https://raw.githubusercontent.com/Homebrew/homebrew-x11/master/<for
 ```
 
 ## Documentation
-`brew help`, `man brew` or check [Homebrew's documentation](https://github.com/Homebrew/brew/tree/master/share/doc/homebrew#readme).
+`brew help`, `man brew` or check [Homebrew's documentation](https://github.com/Homebrew/brew/blob/master/docs/README.md).
