@@ -17,6 +17,7 @@ class Freeglut < Formula
 
   def install
 
+    inreplace "src/x11/fg_main_x11.c", "CLOCK_MONOTONIC", "UNDEFINED_GIBBERISH"
     system "cmake", "-D", "FREEGLUT_BUILD_DEMOS:BOOL=OFF", "-D", "CMAKE_INSTALL_PREFIX:PATH=#{prefix}", "."
     system "make", "all"
     system "make", "install"
