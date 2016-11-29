@@ -11,7 +11,7 @@ class Freeglut < Formula
   end
 
   depends_on :x11
-  depends_on "cmake"
+  depends_on "cmake" => :build
 
   patch :DATA
 
