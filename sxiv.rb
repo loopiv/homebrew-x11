@@ -1,9 +1,9 @@
 class Sxiv < Formula
   desc "Simple X Image Viewer"
   homepage "https://github.com/muennich/sxiv"
-  url "https://github.com/muennich/sxiv/archive/v1.3.1.tar.gz"
-  mirror "https://mirrors.kernel.org/debian/pool/main/s/sxiv/sxiv_1.3.1.orig.tar.gz"
-  sha256 "9a30a1b036e1c17212128554709da3f2d65d3beaef2e0a73097af5e35cf11d0e"
+  url "https://github.com/muennich/sxiv/archive/v1.3.2.tar.gz"
+  mirror "https://mirrors.kernel.org/debian/pool/main/s/sxiv/sxiv_1.3.2.orig.tar.gz"
+  sha256 "9f5368de8f0f57e78ebe02cb531a31107a993f2769cec51bcc8d70f5c668b653"
 
   head "https://github.com/muennich/sxiv.git"
 
