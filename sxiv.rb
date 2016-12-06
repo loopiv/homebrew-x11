@@ -9,10 +9,9 @@ class Sxiv < Formula
 
   bottle do
     cellar :any
-    revision 1
-    sha256 "8f26e720d8bb1583828210fd5aad7907c65dea733177d6b3ca4b041d41c13a98" => :el_capitan
-    sha256 "65ea6058d7970bd8fbef2bad4f4f6809f83b204e34fbc0f082916707b9986a2d" => :yosemite
-    sha256 "cc7d4b3fa3d11a85aa95e4ff52fa46a0dc05d441d0da3dc3b0489114cc749532" => :mavericks
+    sha256 "3d08780acdf39c80dda46bfdd90f22d2c71dbbd8eca06d09520637bb6900238a" => :sierra
+    sha256 "e60cfd9810466255b8e7e1a6569b99c911ded33ad6a944a34cc86328d8b56f75" => :el_capitan
+    sha256 "bc44a8b794c2451f8048ac6a83996d0901b052823ff536b87ccdee8b44a151df" => :yosemite
   end
 
   depends_on :x11
