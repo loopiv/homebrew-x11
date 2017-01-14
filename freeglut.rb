@@ -5,9 +5,10 @@ class Freeglut < Formula
 
   bottle do
     cellar :any
-    sha256 "f974f6a640c0bbe0022b2658645377bbd82e0a1c5c7c6cfc5734defd0df16d39" => :sierra
-    sha256 "1ac12fa3ec33908392230016b32e9741a584d81cbaf191cfe41cc9979177cd9b" => :el_capitan
-    sha256 "1f656946c3b2cc6d1748c32895c1259fbf0659959c9c9ebbdc37bc67edbf42e6" => :yosemite
+    rebuild 1
+    sha256 "5bdcc914f3c6c5346602a7d76562e4267711b8e5fc1a99a16b2f3c5f6b3ef563" => :sierra
+    sha256 "033126fb74921716a82caececca0182ac607dadf86e7a960780c079c22e8d3c7" => :el_capitan
+    sha256 "24a96ad3e703b6d5a345c036313680ed19c72a48a1a0b94fc3809a943b674465" => :yosemite
   end
 
   depends_on :x11
