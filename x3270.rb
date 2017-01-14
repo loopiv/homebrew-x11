@@ -5,9 +5,9 @@ class X3270 < Formula
   sha256 "654756cc1204fd69a861d416d350a0ab3c9cea317173a80b06aca0402a517d3e"
 
   bottle do
-    sha256 "98fb8fcfa643ebe4fea34b8dfa274cce932fddc57278db70965c87b6ad24b12a" => :sierra
-    sha256 "27838aba0027f840ae36745ddd3408af319e08ddf9bda054ad4c9a90821d091c" => :el_capitan
-    sha256 "9aace6f65ca096ecd6153a46351eef9c985791f3118ae9719d3da11c9c251bfa" => :yosemite
+    sha256 "0524236c08b34e81d241b531ac24780f57c4e796a6c5962bf517ed594e65b8e8" => :sierra
+    sha256 "a474a22981d9e034efcc4d61ba0dab211d04d3836148b2f1ac62215a3b992029" => :el_capitan
+    sha256 "a19fd8b05ef699fb3bd63a1cd0480fac9b9fd48a638433e1a5ed3dc1ea5c3ba8" => :yosemite
   end
 
   option "with-c3270", "Include c3270 (curses-based version)"
