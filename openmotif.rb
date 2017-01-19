@@ -32,10 +32,29 @@ class Openmotif < Formula
 
   # Removes a flag clang doesn't recognise/accept as valid
   # From https://trac.macports.org/browser/trunk/dports/x11/openmotif/files/patch-configure.ac.diff
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/b10858b/openmotif/patch-configure.ac.diff"
+    sha256 "0cfff42cb7f37d4bd14fe778ba3d85e418586636b185b0c90e9e3c7d0a35feef"
+  end
+
   # "Only weak aliases are supported on darwin"
   # Adapted from https://trac.macports.org/browser/trunk/dports/x11/openmotif/files/patch-lib-XmP.h.diff
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/b10858b/openmotif/patch-lib-XmP.h.diff"
+    sha256 "320754bd0c1fa520c7576f3c7a22249a9b741c12f29606652add4a7a62c75d3f"
+  end
+
   # Fixes "malloc.h not found" (reported upstream via email)
-  patch :DATA
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/b10858b/openmotif/patch-demos-xrmLib.c.diff"
+    sha256 "047f7b4cac522f3374990a3a2fcfb49259750104488b8a43cccfb3109ac5c8e0"
+  end
+
+  # Fix VendorShell reference for XQuartz 2.7.9+
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/b10858b/openmotif/patch-lib-VendorS.c.diff"
+    sha256 "71b0573aea2d53cc304f206e2d68e5fa7922782cc21cc404b72739b01bfc8034"
+  end
 
   def install
     ENV.universal_binary if build.universal?
@@ -67,98 +86,3 @@ class Openmotif < Formula
     assert_match /no source file specified/, pipe_output("#{bin}/uil 2>&1")
   end
 end
-
-__END__
-diff --git a/configure.ac b/configure.ac
-index 6db447c..22ea2e9 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -159,9 +159,9 @@ fi
- if test x$GCC = xyes
- then
-     CFLAGS="$CFLAGS -Wall -g -fno-strict-aliasing -Wno-unused -Wno-comment"
--    if test ` $CC -dumpversion | sed -e 's/\(^.\).*/\1/'` = "4" ; then
--        CFLAGS="$CFLAGS -fno-tree-ter"
--    fi
-+    #if test ` $CC -dumpversion | sed -e 's/\(^.\).*/\1/'` = "4" ; then
-+        #CFLAGS="$CFLAGS -fno-tree-ter"
-+    #fi
- fi
- AC_DEFINE(NO_OL_COMPAT, 1, "No OL Compatability")
-
-
-diff --git a/lib/Xm/XmP.h b/lib/Xm/XmP.h
-index 97c7c71..50b1585 100644
---- a/lib/Xm/XmP.h
-+++ b/lib/Xm/XmP.h
-@@ -1437,9 +1437,13 @@ extern void _XmDestroyParentCallback(
-
- #endif /* NO_XM_1_2_BC */
-
--#if __GNUC__
-+#ifdef __GNUC__
- #  define XM_DEPRECATED  __attribute__((__deprecated__))
--#  define XM_ALIAS(sym)  __attribute__((__weak__,alias(#sym)))
-+#  ifndef __APPLE__
-+#    define XM_ALIAS(sym)  __attribute__((__weak__,alias(#sym)))
-+#  else
-+#   define XM_ALIAS(sym)
-+#  endif
- #else
- #  define XM_DEPRECATED
- #  define XM_ALIAS(sym)
-
-
-diff --git a/demos/programs/workspace/xrmLib.c b/demos/programs/workspace/xrmLib.c
-index e3f56bd..d056e03 100644
---- a/demos/programs/workspace/xrmLib.c
-+++ b/demos/programs/workspace/xrmLib.c
-@@ -30,7 +30,7 @@ static char rcsid[] = "$XConsortium: xrmLib.c /main/6 1995/07/14 10:01:41 drk $"
- #endif
-
- #include <stdio.h>
--#include <malloc.h>
-+#include <stdlib.h>
- #include <Xm/Xm.h>
- #include "wsm.h"
- #include "wsmDebug.h"
-
-
-diff --git a/lib/Xm/VendorS.c b/lib/Xm/VendorS.c
-index b5b5a24..cbd0967 100644
---- a/lib/Xm/VendorS.c
-+++ b/lib/Xm/VendorS.c
-@@ -292,6 +292,25 @@ static unsigned short destroy_list_cnt ;
- static Display * _XmDisplayHandle = NULL ;
- static XtErrorMsgHandler previousWarningHandler = NULL;
-
-+
-+
-+#if defined(__APPLE__)
-+/* Hack necessary to handle Apple two-level namespaces */
-+extern WidgetClass vendorShellWidgetClass; /* from Xt/Vendor.c */
-+extern VendorShellClassRec _XmVendorShellClassRec;
-+#define vendorShellClassRec _XmVendorShellClassRec
-+
-+__attribute__((constructor))
-+static void __VendorShellHack(void)
-+{
-+    vendorShellWidgetClass = (WidgetClass)(&_XmVendorShellClassRec);
-+    transientShellWidgetClass->core_class.superclass = vendorShellWidgetClass;
-+    topLevelShellWidgetClass->core_class.superclass = vendorShellWidgetClass;
-+}
-+#endif
-+
-+
-+
- /***************************************************************************
-  *
-  * Vendor shell class record
-@@ -506,6 +525,8 @@ VendorShellClassRec vendorShellClassRec = {
-     }
- };
-
-+#undef vendorShellClassRec
-+
- externaldef(vendorshellwidgetclass) WidgetClass
-   vendorShellWidgetClass = (WidgetClass) (&vendorShellClassRec);
