@@ -5,9 +5,9 @@ class Libxkbcommon < Formula
   sha256 "ba59305d2e19e47c27ea065c2e0df96ebac6a3c6e97e28ae5620073b6084e68b"
 
   bottle do
-    sha256 "c138b2459677414251a3a904d51a3151a90f0a32909641b7ca003241c70ceb1c" => :yosemite
-    sha256 "65335a728e42b65b02d50508c1dcfea2f1173ab675b319d7060dcab464d9aa11" => :mavericks
-    sha256 "b04ed8bb44caee806c2fdb8a7b364ca556d26495a28099ce918f5a9ac3d73885" => :mountain_lion
+    sha256 "c24733ed10142c51aafa1f3d430b5b7dcf9bc16ab3d7a7b6639462e2e6b815a0" => :sierra
+    sha256 "3a004bcd4596b08f1dc0fbc81585f07aacdb04be18b7a2fccbe68e89f417a3a4" => :el_capitan
+    sha256 "5a7289cdba5b6a2f7c0556b243ea03acf256fce4d7620d8e4c603c8ed194c6bf" => :yosemite
   end
 
   head do
