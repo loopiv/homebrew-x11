@@ -1,9 +1,8 @@
 class Libxkbcommon < Formula
   desc "Keyboard handling library"
-  homepage "http://xkbcommon.org/"
-  url "http://xkbcommon.org/download/libxkbcommon-0.5.0.tar.xz"
-  sha256 "90bd7824742b9a6f52a6cf80e2cadd6f5349cf600a358d08260772615b89d19c"
-  head "https://github.com/xkbcommon/libxkbcommon.git"
+  homepage "https://xkbcommon.org/"
+  url "https://xkbcommon.org/download/libxkbcommon-0.7.1.tar.xz"
+  sha256 "ba59305d2e19e47c27ea065c2e0df96ebac6a3c6e97e28ae5620073b6084e68b"
 
   bottle do
     sha256 "c138b2459677414251a3a904d51a3151a90f0a32909641b7ca003241c70ceb1c" => :yosemite
@@ -11,14 +10,23 @@ class Libxkbcommon < Formula
     sha256 "b04ed8bb44caee806c2fdb8a7b364ca556d26495a28099ce918f5a9ac3d73885" => :mountain_lion
   end
 
+  head do
+    url "https://github.com/xkbcommon/libxkbcommon.git"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+  end
+
   depends_on :x11
   depends_on "bison" => :build
   depends_on "pkg-config" => :build
 
   def install
+    system "./autogen.sh" if build.head?
     inreplace "configure" do |s|
       s.gsub! "-version-script $output_objdir/$libname.ver", ""
-      s.gsub! "${wl}-version-script", ""
+      s.gsub! "$wl-version-script", ""
     end
     inreplace %w[Makefile.in Makefile.am] do |s|
       s.gsub! "-Wl,--version-script=${srcdir}/xkbcommon.map", ""
@@ -37,11 +45,12 @@ class Libxkbcommon < Formula
     #include <xkbcommon/xkbcommon.h>
     int main() {
       return (xkb_context_new(XKB_CONTEXT_NO_FLAGS) == NULL)
-             ? EXIT_FAILURE
-             : EXIT_SUCCESS;
+        ? EXIT_FAILURE
+        : EXIT_SUCCESS;
     }
     EOS
-    system ENV.cc, "test.c", "-L#{lib}", "-lxkbcommon", "-o", "test"
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lxkbcommon",
+                   "-o", "test"
     system "./test"
   end
 end
