@@ -1,8 +1,8 @@
 class Pari < Formula
-  homepage "http://pari.math.u-bordeaux.fr/"
-  url "http://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.7.3.tar.gz"
-  mirror "https://mirrors.kernel.org/debian/pool/main/p/pari/pari_2.7.3.orig.tar.gz"
-  sha256 "38032944bf4182cecbe438b888ec095ae7768fdbdd2adc1f25251f724f25650a"
+  homepage "https://pari.math.u-bordeaux.fr/"
+  url "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.9.1.tar.gz"
+  mirror "https://mirrors.kernel.org/debian/pool/main/p/pari/pari_2.9.1.orig.tar.gz"
+  sha256 "dc510f96686463c1ade7c2a6e16fa9466fd4af6a65fddf9822ba07d7d2e70767"
 
   bottle do
     sha256 "117b68816bcec0e692ae9517639a327de286eb43afc9d517e84c59fbb46cd55a" => :yosemite
