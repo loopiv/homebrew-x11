@@ -1,8 +1,8 @@
 class Mupdf < Formula
   desc "Lightweight PDF and XPS viewer"
-  homepage "http://mupdf.com"
-  url "http://mupdf.com/downloads/archive/mupdf-1.8-source.tar.gz"
-  sha256 "a2a3c64d8b24920f87cf4ea9339a25abf7388496440f13b37482d1403c33c206"
+  homepage "https://mupdf.com"
+  url "https://mupdf.com/downloads/mupdf-1.10a-source.tar.gz"
+  sha256 "aacc1f36b9180f562022ef1ab3439b009369d944364f3cff8a2a898834e3a836"
 
   bottle do
     cellar :any
