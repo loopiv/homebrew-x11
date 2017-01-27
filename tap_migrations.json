@@ -14,6 +14,7 @@
   "i3status": "homebrew/core",
   "imake": "homebrew/core",
   "libxkbcommon": "homebrew/core",
+  "mesalib-glw": "homebrew/core",
   "morse": "homebrew/core",
   "mscgen": "homebrew/core",
   "mupdf": "homebrew/core",
