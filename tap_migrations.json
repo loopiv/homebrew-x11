@@ -1,4 +1,5 @@
 {
+  "curlftpfs": "homebrew/fuse",
   "chezscheme": "homebrew/core",
   "ddd": "homebrew/core",
   "dmenu": "homebrew/core",
